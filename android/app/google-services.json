@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "556725709884",
+    "project_id": "atletes-207ed",
+    "storage_bucket": "atletes-207ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556725709884:android:583f6dada780497ce32739",
+        "android_client_info": {
+          "package_name": "com.sports.atletes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556725709884-hv2kb0q4mhguedta6shv88ors19vi92h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sports.atletes",
+            "certificate_hash": "52584be484888a1169a9fa9728069f9af0fefc74"
+          }
+        },
+        {
+          "client_id": "556725709884-n303fratrr9ipis2urk7a1jnklrhmskt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMa9X5VtvKkMDV2Id_jAow0eVjxvnlN9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556725709884-n303fratrr9ipis2urk7a1jnklrhmskt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
