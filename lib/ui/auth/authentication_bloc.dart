@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:atletes_sport_app/constants.dart';
-import 'package:atletes_sport_app/model/user.dart';
+import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:atletes_sport_app/services/authenticate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,7 +50,7 @@ class AuthenticationBloc
             message: 'Facebook login failed, Please try again.'));
       }
     });
-    /*on<LoginWithGoogleEvent>((event, emit) async {
+    on<LoginWithGoogleEvent>((event, emit) async {
       dynamic result = await FireStoreUtils.loginWithGoogle();
       if (result != null && result is User) {
         user = result;
@@ -61,7 +61,7 @@ class AuthenticationBloc
         emit(const AuthenticationState.unauthenticated(
             message: 'Facebook login failed, Please try again.'));
       }
-    });*/
+    });
 
     on<LogoutEvent>((event, emit) async {
       await FireStoreUtils.logout();

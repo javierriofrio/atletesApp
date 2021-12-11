@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:atletes_sport_app/constants.dart';
-import 'package:atletes_sport_app/model/user.dart';
+import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:atletes_sport_app/services/helper.dart';
 import 'package:atletes_sport_app/ui/auth/authentication_bloc.dart';
 import 'package:atletes_sport_app/ui/auth/welcome/welcome_screen.dart';

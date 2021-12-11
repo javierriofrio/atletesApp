@@ -8,10 +8,14 @@ class HomeTrips extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Column(
-              children: [HeaderAppBar()]),
+      body: Column(
+        children: [
+          Container(
+            child: HeaderAppBar(),
+          ),
+          Expanded(
+              // The ListView
+              child: EventList()),
         ],
       ),
       bottomNavigationBar: BottomBar(),

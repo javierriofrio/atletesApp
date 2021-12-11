@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:atletes_sport_app/constants.dart';
-import 'package:atletes_sport_app/model/user.dart';
+import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:atletes_sport_app/services/helper.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
