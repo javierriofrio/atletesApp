@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:atletes_sport_app/user/user_details.dart';
+import 'package:atletes_sport_app/bottom_bar.dart';
 
 class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-        title: "User Profile",
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: Text('Usuario'),
+          centerTitle: true,
         ),
-        home: Scaffold(
-          body: Text("Usuario"),
-        )
+        body: UserDetails(),
+      bottomNavigationBar: BottomBar(),
     );
   }
 
