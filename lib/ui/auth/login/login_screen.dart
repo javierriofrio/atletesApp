@@ -95,7 +95,7 @@ class _LoginScreen extends State<LoginScreen> {
                       SizedBox(height: 10),
                       MaterialButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeTrips()),
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeEvents()),
                           );
                             /*context.read<LoadingCubit>().showLoading(
                               context, 'Logging in, Please wait...', false);
