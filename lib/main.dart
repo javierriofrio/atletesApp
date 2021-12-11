@@ -1,4 +1,3 @@
-import 'package:atletes_sport_app/platzi_trips.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +5,7 @@ import 'package:atletes_sport_app/constants.dart';
 import 'package:atletes_sport_app/ui/auth/authentication_bloc.dart';
 import 'package:atletes_sport_app/ui/loading_cubit.dart';
 import 'package:atletes_sport_app/ui/auth/login/login_screen.dart';
-import 'package:atletes_sport_app/home_trips.dart';
+import 'package:atletes_sport_app/home_events.dart';
 
 void main() => runApp(MultiRepositoryProvider(
       providers: [

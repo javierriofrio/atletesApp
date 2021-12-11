@@ -1,3 +1,4 @@
+import 'package:atletes_sport_app/home_events.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -94,6 +95,8 @@ class _LoginScreen extends State<LoginScreen> {
                       SizedBox(height: 10),
                       MaterialButton(
                         onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeTrips()),
+                          );
                             /*context.read<LoadingCubit>().showLoading(
                               context, 'Logging in, Please wait...', false);
                           context.read<AuthenticationBloc>().add(

@@ -22,7 +22,7 @@ class DescriptionEvent extends StatelessWidget {
                     title: Text(nameEvent),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(
                       descriptionEvent,
                       style: TextStyle(color: Colors.black.withOpacity(0.6)),
