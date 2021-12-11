@@ -1,6 +1,6 @@
 import 'package:atletes_sport_app/user/user_details.dart';
 import 'package:flutter/material.dart';
-import 'package:atletes_sport_app/event/event_list.dart';
+import 'package:atletes_sport_app/event/event_add.dart';
 import 'package:atletes_sport_app/event/event_list_home.dart';
 
 class HomeEvents extends StatefulWidget {
@@ -15,9 +15,9 @@ class HomeEvents extends StatefulWidget {
 class _HomeEvents extends State<HomeEvents> {
   int indexTap = 0;
   final List<Widget> widgetsChildren = [
-    EventHome(),
+    EventAdd(),
     UserDetails(),
-    EventList(),
+    EventHome(),
     UserDetails()
   ];
 
