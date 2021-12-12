@@ -24,7 +24,10 @@ dependencies:
   url_launcher: ^6.0.12
   google_sign_in: ^5.0.0-nullsafety
   image_picker: ^0.8.4+4
-  permission_handler: ^8.3.0
+  datetime_picker_formfield: ^2.0.0
+  geolocator: ^8.0.0
+  google_maps_flutter: ^2.1.1
+  latlong : ^0.6.1
 
   cupertino_icons: ^1.0.3
 

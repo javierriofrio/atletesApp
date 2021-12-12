@@ -1,27 +1,48 @@
-import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class ImageUpload extends StatefulWidget {
+
   @override
-  _ImageUploadState createState() => _ImageUploadState();
+  _ImageUpload createState() => _ImageUpload();
 }
 
-class _ImageUploadState extends State<ImageUpload> {
-  String imageUrl;
+class _ImageUpload extends State<ImageUpload> {
+  File? _image;
+
 
   @override
   Widget build(BuildContext context) {
-    backgroundColor: Colors.white,
-    return Scaffold(
-    appBar: AppBar(
-    title: Text('Upload Image', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),),
-    centerTitle: true,
-    elevation: 0.0,
-    backgroundColor: Colors.white,
-    ),
-    body: Container()
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 200.0,
+            child: Center(
+              child: _image == null
+                  ? Text("No Image is picked")
+                  : Image.file(_image!),
+            ),
+          ),
+        ),
+        FloatingActionButton(
+          onPressed: () => pickImage(),
+          tooltip: "Elegir una imagen",
+          child: Icon(Icons.add_a_photo),
+        ),
+      ],
     );
   }
+  Future pickImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image == null) return;
+    final imageTemporary = File(image.path);
+    setState(() => this._image = imageTemporary);
+  }
+
 }
