@@ -1,8 +1,13 @@
 import 'dart:async';
 
+import 'package:atletes_sport_app/modelo/event.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class NewStopWatch extends StatefulWidget {
+
+  /*late Event event;
+  NewStopWatch(this.event);*/
 
   @override
   _NewStopWatchState createState() => _NewStopWatchState();
@@ -11,6 +16,7 @@ class NewStopWatch extends StatefulWidget {
 class _NewStopWatchState extends State<NewStopWatch> {
 
   Stopwatch watch = Stopwatch();
+  late List<Position> locationList = [];
   late Timer timer;
   bool startStop = true;
 
@@ -19,7 +25,8 @@ class _NewStopWatchState extends State<NewStopWatch> {
   updateTime(Timer timer) {
     if (watch.isRunning) {
       setState(() {
-        print("startstop Inside=$startStop");
+        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+            .then((Position position) => locationList.add(position));
         elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
       });
     }
@@ -45,7 +52,7 @@ class _NewStopWatchState extends State<NewStopWatch> {
               FloatingActionButton(
                   heroTag: "btn2",
                   backgroundColor: Colors.green,
-                  onPressed: null, //resetWatch,
+                  onPressed: () => saveLocation(), //resetWatch,
                   child: Icon(Icons.check)),
             ],
           )
@@ -53,6 +60,11 @@ class _NewStopWatchState extends State<NewStopWatch> {
       ),
     );
   }
+
+  saveLocation(){
+    print(locationList);
+  }
+
 
   startOrStop() {
     if(startStop) {
@@ -66,7 +78,7 @@ class _NewStopWatchState extends State<NewStopWatch> {
     setState(() {
       startStop = false;
       watch.start();
-      timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
+      timer = Timer.periodic(Duration(milliseconds: 10000), updateTime);
     });
   }
 

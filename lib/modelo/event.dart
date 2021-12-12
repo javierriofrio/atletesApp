@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Event {
   String name;
   String description;
   DateTime dateLimit;
   String photoURL;
-  List<dynamic> listPosition;
+  List<Position> listPositions;
 
 
   Event(
@@ -13,7 +13,7 @@ class Event {
       this.description = '',
       required this.dateLimit ,
       this.photoURL = '',
-      this.listPosition = new List()});
+      this.listPositions = const []});
 
 
   factory Event.fromJson(Map<String, dynamic> parsedJson) {
@@ -21,7 +21,8 @@ class Event {
         name: parsedJson['email'] ?? '',
         description: parsedJson['firstName'] ?? '',
         dateLimit: parsedJson['lastName'] ?? '',
-        photoURL: parsedJson['id'] ?? parsedJson['userID'] ?? '');
+        photoURL: parsedJson['id'] ?? parsedJson['userID'] ?? '',
+        listPositions: parsedJson['listPositions'] ?? '');
   }
 
   Map<String, dynamic> toJson() {
@@ -30,6 +31,7 @@ class Event {
       'description': description,
       'dateLimit': dateLimit,
       'photoURL': photoURL,
+      'listPositions': listPositions,
     };
   }
 }

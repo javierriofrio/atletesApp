@@ -2,11 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:atletes_sport_app/modelo/event.dart';
 
 class ImageUpload extends StatefulWidget {
-
+  /*late Event event;*/
+  /*ImageUpload(this.event);*/
   @override
   _ImageUpload createState() => _ImageUpload();
+
+
 }
 
 class _ImageUpload extends State<ImageUpload> {
