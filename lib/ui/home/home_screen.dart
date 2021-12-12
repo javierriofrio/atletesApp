@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:atletes_sport_app/ui/auth/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,6 @@ import 'package:atletes_sport_app/constants.dart';
 import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:atletes_sport_app/services/helper.dart';
 import 'package:atletes_sport_app/ui/auth/authentication_bloc.dart';
-import 'package:atletes_sport_app/ui/auth/welcome/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,7 +33,7 @@ class _HomeState extends State<HomeScreen> {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state.authState == AuthState.unauthenticated) {
-          pushAndRemoveUntil(context, const WelcomeScreen(), false);
+          pushAndRemoveUntil(context, const LoginScreen(), false);
         }
       },
       child: Scaffold(

@@ -1,8 +1,10 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
+import 'package:atletes_sport_app/user/model/user.dart';
 
 class HeaderAppBar extends StatelessWidget {
+  late User user;
+  HeaderAppBar(this.user);
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -19,7 +21,7 @@ class HeaderAppBar extends StatelessWidget {
                   fit: BoxFit.contain, // otherwise the logo will be tiny
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
-                    child: Image.asset('assets/images/User-Profile.png'),
+                    child: Image.network(user.profilePictureURL),
                   ),
                 ),
               )),
@@ -35,19 +37,7 @@ class HeaderAppBar extends StatelessWidget {
                           children: [
                             Column(
                               children: [
-                                Text('Pedro Perez',
-                                    style: TextStyle(
-                                        fontSize: 25, color: Colors.white))
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              children: [
-                                Text('RETOS',
+                                Text(user.firstName + user.lastName,
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.white))
                               ],
@@ -59,22 +49,34 @@ class HeaderAppBar extends StatelessWidget {
                           children: [
                             Column(
                               children: [
+                                Text('RETOS',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white))
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
                                 Text('Creados',
                                     style: TextStyle(
-                                        fontSize: 25, color: Colors.white)),
+                                        fontSize: 15, color: Colors.white)),
                                 Text('0',
                                     style: TextStyle(
-                                        fontSize: 25, color: Colors.white))
+                                        fontSize: 12, color: Colors.white))
                               ],
                             ),
                             Column(
                               children: [
                                 Text('Completados',
                                     style: TextStyle(
-                                        fontSize: 25, color: Colors.white)),
+                                        fontSize: 15, color: Colors.white)),
                                 Text('10',
                                     style: TextStyle(
-                                        fontSize: 25, color: Colors.white))
+                                        fontSize: 12, color: Colors.white))
                               ],
                             ),
                           ],
@@ -83,11 +85,11 @@ class HeaderAppBar extends StatelessWidget {
           Expanded(
               flex: 2,
               child: Container(
-                margin: const EdgeInsets.all(20.0),
+                margin: const EdgeInsets.all(20.20),
                 child: Column(
                   children: [
                     Text('1000 pts',
-                        style: TextStyle(fontSize: 20, color: Colors.white))
+                        style: TextStyle(fontSize: 10, color: Colors.white))
                   ],
                 ),
               )),

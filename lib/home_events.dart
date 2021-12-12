@@ -3,21 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:atletes_sport_app/event/event_add.dart';
 import 'package:atletes_sport_app/event/event_list_home.dart';
 
-class HomeEvents extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _HomeEvents();
-  }
+import 'package:atletes_sport_app/ui/auth/login/login_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:atletes_sport_app/user/model/user.dart';
+import 'package:atletes_sport_app/services/helper.dart';
+import 'package:atletes_sport_app/ui/auth/authentication_bloc.dart';
 
+class HomeEvents extends StatefulWidget {
+  final User user;
+
+  const HomeEvents({Key? key, required this.user}) : super(key: key);
+
+  @override
+  State createState() => _EventState();
 }
 
-class _HomeEvents extends State<HomeEvents> {
+class _EventState extends State<HomeEvents> {
+  late User user;
   int indexTap = 0;
-  final List<Widget> widgetsChildren = [
+  List<Widget> _children() => [
     EventAdd(),
     UserDetails(),
-    EventHome(),
+    EventHome(widget.user),
     UserDetails()
   ];
 
@@ -28,15 +36,26 @@ class _HomeEvents extends State<HomeEvents> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      body: widgetsChildren[indexTap],
-      bottomNavigationBar: bottomNavigationTabBarView(),
-      endDrawer: Container(),
-    );
+  void initState() {
+    super.initState();
+    user = widget.user;
   }
 
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> children = _children();
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if (state.authState == AuthState.unauthenticated) {
+          pushAndRemoveUntil(context, const LoginScreen(), false);
+        }
+      },
+      child: Scaffold(
+        body: _children()[indexTap],
+        bottomNavigationBar: bottomNavigationTabBarView(),
+      ),
+    );
+  }
   BottomNavigationBar bottomNavigationTabBarView() {
     const iconSize = 40.0;
     return BottomNavigationBar(

@@ -6,9 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:atletes_sport_app/services/helper.dart';
 import 'package:atletes_sport_app/ui/auth/authentication_bloc.dart';
 import 'package:atletes_sport_app/ui/auth/login/login_bloc.dart';
-import 'package:atletes_sport_app/ui/home/home_screen.dart';
 import 'package:atletes_sport_app/ui/loading_cubit.dart';
-import 'package:atletes_sport_app/user/user_profile.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -43,7 +41,7 @@ class _LoginScreen extends State<LoginScreen> {
                   context.read<LoadingCubit>().hideLoading();
                   if (state.authState == AuthState.authenticated) {
                     pushAndRemoveUntil(
-                        context, HomeScreen(user: state.user!), false);
+                        context, HomeEvents(user: state.user!), false);
                   } else {
                     showSnackBar(context,
                         state.message ?? 'Couldn\'t login, Please try again.');
@@ -76,13 +74,13 @@ class _LoginScreen extends State<LoginScreen> {
                           borderRadius: new BorderRadius.circular(40.0),
                         ),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile()),
-                          );
-                          /*context.read<LoadingCubit>().showLoading(
+                          /*Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile()),
+                          );*/
+                          context.read<LoadingCubit>().showLoading(
                               context, 'Logging in, Please wait...', false);
                           context.read<AuthenticationBloc>().add(
                             LoginWithGoogleEvent(),
-                          );*/
+                          );
                         },
                         minWidth: double.infinity,
                         height: 40,
@@ -95,13 +93,11 @@ class _LoginScreen extends State<LoginScreen> {
                       SizedBox(height: 10),
                       MaterialButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeEvents()),
-                          );
-                            /*context.read<LoadingCubit>().showLoading(
+                            context.read<LoadingCubit>().showLoading(
                               context, 'Logging in, Please wait...', false);
                           context.read<AuthenticationBloc>().add(
                             LoginWithFacebookEvent(),
-                          );*/
+                          );
                         },
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0),
