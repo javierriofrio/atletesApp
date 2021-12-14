@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-class DescriptionEvent extends StatelessWidget {
+class DescriptionNotification extends StatelessWidget {
   final String nameEvent;
-  final String descriptionEvent;
-  final String imagenURL;
+  final String dateLimit;
 
-  DescriptionEvent(this.nameEvent, this.descriptionEvent, this.imagenURL);
+  DescriptionNotification(this.nameEvent, this.dateLimit);
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +23,13 @@ class DescriptionEvent extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      descriptionEvent,
+                      dateLimit,
                       style: TextStyle(color: Colors.black.withOpacity(0.6)),
                     ),
                   ),
                 ],
               ),
             ),
-            Expanded(child: Image.network(imagenURL)),
           ],
         ));
 

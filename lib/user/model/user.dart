@@ -7,12 +7,20 @@ class User {
   String userID;
   String profilePictureURL;
   String appIdentifier;
+  String country;
+  String city;
+  List<String> sports;
+  String description;
 
   User(
       {this.email = '',
       this.firstName = '',
       this.lastName = '',
       this.userID = '',
+        this.description = '',
+        this.country = '',
+        this.city = '',
+        this.sports  = const [],
       this.profilePictureURL = ''})
       : appIdentifier = 'Flutter Login Screen ${Platform.operatingSystem}';
 

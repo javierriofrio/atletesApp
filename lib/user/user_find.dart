@@ -1,11 +1,11 @@
+import 'package:atletes_sport_app/user/user_list.dart';
 import 'package:flutter/material.dart';
 import 'package:atletes_sport_app/header_appbar.dart';
-import 'package:atletes_sport_app/event/event_list.dart';
 import 'package:atletes_sport_app/user/model/user.dart';
 
-class EventHome extends StatelessWidget {
+class UserFind extends StatelessWidget {
   late User user;
-  EventHome(this.user);
+  UserFind(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class EventHome extends StatelessWidget {
         ),
         Expanded(
           // The ListView
-            child: EventList(this.user)),
+            child: UserList(this.user)),
       ],
     );
 

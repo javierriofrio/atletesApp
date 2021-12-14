@@ -18,12 +18,12 @@ const double CAMERA_BEARING = 30;
 const double PIN_VISIBLE_POSITION = 20;
 const double PIN_INVISIBLE_POSITION = -220;
 
-class EventForm extends StatefulWidget {
+class EventRegister extends StatefulWidget {
   @override
-  _EventForm createState() => _EventForm();
+  _EventRegister createState() => _EventRegister();
 }
 
-class _EventForm extends State<EventForm> {
+class _EventRegister extends State<EventRegister> {
   File? image;
 
   late String imageUrl = 'https://i.imgur.com/sUFH1Aq.png';

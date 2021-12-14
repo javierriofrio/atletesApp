@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:atletes_sport_app/event/model/event.dart';
 import 'package:atletes_sport_app/services/authenticate.dart';
+import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -18,12 +19,16 @@ const double CAMERA_BEARING = 30;
 const double PIN_VISIBLE_POSITION = 20;
 const double PIN_INVISIBLE_POSITION = -220;
 
-class EventForm extends StatefulWidget {
+class EventEditForm extends StatefulWidget {
+  late User user;
+  late String eventId;
+  EventEditForm(this.user, String eventId);
+
   @override
-  _EventForm createState() => _EventForm();
+  _EventEditForm createState() => _EventEditForm();
 }
 
-class _EventForm extends State<EventForm> {
+class _EventEditForm extends State<EventEditForm> {
   File? image;
 
   late String imageUrl = 'https://i.imgur.com/sUFH1Aq.png';
@@ -33,7 +38,6 @@ class _EventForm extends State<EventForm> {
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   Event event = new Event(dateLimit: DateTime.now());
-
   Completer<GoogleMapController> _controller = Completer();
   late BitmapDescriptor sourceIcon;
   late BitmapDescriptor destinationIcon;
@@ -86,19 +90,16 @@ class _EventForm extends State<EventForm> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
-                  onChanged: (value) {
-                    event.name = value;
-                  },
                   controller: _controllerName,
                   decoration: const InputDecoration(
                     icon: const Icon(Icons.event),
                     labelText: 'Nombre',
                   ),
+                  initialValue: event.name,
+
                 ),
                 TextFormField(
-                  onChanged: (value) {
-                    event.description = value;
-                  },
+                  initialValue: event.description,
                   controller: _controllerDescription,
                   decoration: const InputDecoration(
                     icon: const Icon(Icons.event_note),
@@ -106,21 +107,7 @@ class _EventForm extends State<EventForm> {
                   ),
                 ),
                 TextFormField(
-                  onChanged: (val) {
-                    event.dateLimit = selectedDate;
-                  },
-                  onTap: () async {
-                    DateTime date = DateTime(1900);
-                    FocusScope.of(context).requestFocus(new FocusNode());
-
-                    date = (await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2100)))!;
-
-                    _dateController.text = date.toIso8601String();
-                  },
+                  initialValue: event.dateLimit.toString(),
                   controller: _dateController,
                   keyboardType: TextInputType.datetime,
                   decoration: InputDecoration(
@@ -144,16 +131,9 @@ class _EventForm extends State<EventForm> {
                             .width,
                         height: 200.0,
                         child: Center(
-                          child: _image == null
-                              ? Image.network(imageUrl)
-                              : Image.file(_image!),
+                          child: Image.network(event.photoURL),
                         ),
                       ),
-                    ),
-                    FloatingActionButton(
-                      onPressed: () => pickImage(),
-                      tooltip: "Elegir una imagen",
-                      child: Icon(Icons.add_a_photo),
                     ),
                   ],
                 ),
@@ -180,23 +160,6 @@ class _EventForm extends State<EventForm> {
                         ],
                       )
                     ],
-                  ),
-                ),
-                SizedBox(
-                  width: 400, // or use fixed size like 200
-                  height: 400,
-                  child: GoogleMap(
-                    myLocationEnabled: true,
-                    compassEnabled: false,
-                    tiltGesturesEnabled: false,
-                    polylines: _polylines,
-                    markers: _markers,
-                    mapType: MapType.normal,
-                    initialCameraPosition: initialCameraPosition,
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                      setPolylines();
-                    },
                   ),
                 ),
                 ElevatedButton(

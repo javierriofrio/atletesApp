@@ -56,62 +56,58 @@ class _LoginScreen extends State<LoginScreen> {
                 if (state is LoginFailureState) {
                   _validate = AutovalidateMode.onUserInteraction;
                 }
-                return Form(
-                  key: _key,
-                  autovalidateMode: _validate,
-                  child: ListView(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Image.asset(
-                          'assets/images/atletes.jpg',
-                          height: 200,
-                        ),
+                return Column(
+                  children: [
+                    Container(
+                      child: Image.asset(
+                        'assets/images/atletes.jpg',
+                        height: 200,
                       ),
-                      SizedBox(height: 50),
-                      MaterialButton(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(40.0),
-                        ),
-                        onPressed: () {
-                          /*Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile()),
-                          );*/
-                          context.read<LoadingCubit>().showLoading(
-                              context, 'Logging in, Please wait...', false);
-                          context.read<AuthenticationBloc>().add(
-                            LoginWithGoogleEvent(),
-                          );
-                        },
-                        minWidth: double.infinity,
-                        height: 40,
-                        child: Text(
-                          'Login Google'.toUpperCase(),
-                        ),
-                        color: Colors.redAccent,
-                        textColor: Colors.white,
-                      ),
-                      SizedBox(height: 10),
-                      MaterialButton(
-                        onPressed: () {
+                    ),
+                    Container(
+                        child: Column(
+                      children: [
+                        MaterialButton(
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(40.0),
+                          ),
+                          onPressed: () {
                             context.read<LoadingCubit>().showLoading(
-                              context, 'Logging in, Please wait...', false);
-                          context.read<AuthenticationBloc>().add(
-                            LoginWithFacebookEvent(),
-                          );
-                        },
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
+                                context, 'Logging in, Please wait...', false);
+                            context.read<AuthenticationBloc>().add(
+                                  LoginWithGoogleEvent(),
+                                );
+                          },
+                          minWidth: double.infinity,
+                          height: 40,
+                          child: Text(
+                            'Login Google'.toUpperCase(),
+                          ),
+                          color: Colors.redAccent,
+                          textColor: Colors.white,
                         ),
-                        minWidth: double.infinity,
-                        height: 40,
-                        child: Text(
-                          'Login Facebook'.toUpperCase(),
-                        ),
-                        color: Colors.blue,
-                        textColor: Colors.white,
-                      ),
-                    ],
-                  ),
+                        MaterialButton(
+                          onPressed: () {
+                            context.read<LoadingCubit>().showLoading(
+                                context, 'Logging in, Please wait...', false);
+                            context.read<AuthenticationBloc>().add(
+                                  LoginWithFacebookEvent(),
+                                );
+                          },
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0),
+                          ),
+                          minWidth: double.infinity,
+                          height: 40,
+                          child: Text(
+                            'Login Facebook'.toUpperCase(),
+                          ),
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                        )
+                      ],
+                    )),
+                  ],
                 );
               },
             ),
