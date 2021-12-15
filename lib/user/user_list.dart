@@ -27,7 +27,7 @@ class UserList extends StatelessWidget {
             itemBuilder: (context,index){
               return GestureDetector(
                 child: DescriptionEvent(snapshot.data!.docs[index]['firstName'], snapshot.data!.docs[index]['lastName'],
-                    snapshot.data!.docs[index]['photoURL'].toString()),
+                    snapshot.data!.docs[index]['profilePictureURL']),
                 /*onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EventEdit(this.user, snapshot.data!.docs[index].id))),*/
               );
             },

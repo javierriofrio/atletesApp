@@ -1,4 +1,5 @@
 import 'package:atletes_sport_app/notification/ui/notification_ui.dart';
+import 'package:atletes_sport_app/statistics/general_statistic.dart';
 import 'package:atletes_sport_app/user/user_details.dart';
 import 'package:atletes_sport_app/user/user_find.dart';
 import 'package:atletes_sport_app/user/user_list.dart';
@@ -13,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:atletes_sport_app/services/helper.dart';
 import 'package:atletes_sport_app/ui/auth/authentication_bloc.dart';
-import 'package:atletes_sport_app/notification/ui/notification_ui.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 import 'event/envet_find.dart';
 
@@ -69,48 +70,48 @@ class _EventState extends State<HomeEvents> {
                 leading: Icon(Icons.supervised_user_circle),
                 title: Text('Mi Perfil'),
                 onTap: (){
-                     pushAndRemoveUntil(
-                      context, UserProfile(), false);
+                  push(
+                      context, UserDetails());
                 },
               ),
               ListTile(
                 leading: Icon(Icons.calendar_today_outlined),
                 title: Text('Crear Evento'),
                 onTap: (){
-                  pushAndRemoveUntil(
-                      context, EventAdd(), false);
+                  push(
+                      context, EventAdd());
                 },
               ),
               ListTile(
                 leading: Icon(Icons.find_in_page_outlined),
                 title: Text('Buscar Evento'),
                 onTap: (){
-                  pushAndRemoveUntil(
-                      context, EventFind(), false);
+                  push(
+                      context, EventFind());
                 },
               ),
               ListTile(
                 leading: Icon(Icons.circle_notifications),
                 title: Text('Notificaciones'),
                 onTap: (){
-                  pushAndRemoveUntil(
-                      context, NotificationUI(user), false);
+                  push(
+                      context, NotificationUI(user));
                 },
               ),
               ListTile(
                 leading: Icon(Icons.auto_graph_outlined),
                 title: Text('Estadisticas'),
                 onTap: (){
-                  pushAndRemoveUntil(
-                      context, HomeEvents(user: user), false);
+                  push(
+                      context, GeneralStatistic(user: user));
                 },
               ),
               ListTile(
                 leading: Icon(Icons.groups ),
                 title: Text('Buscar Amigo'),
                 onTap: (){
-                  pushAndRemoveUntil(
-                      context, UserFind(user), false);
+                  push(
+                      context, UserFind(user));
                 },
               )
             ],

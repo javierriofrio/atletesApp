@@ -158,6 +158,12 @@ class FireStoreUtils {
     await auth.FirebaseAuth.instance.signOut();
   }
 
+  static Future<String?> createNewEventUser(Event event, String userId) async => await firestore
+      .collection(USERS).doc().collection(EVENTS)
+      .doc()
+      .set(event.toJson())
+      .then((value) => null, onError: (e) => e);
+
   static Future<User?> getAuthUser() async {
     auth.User? firebaseUser = auth.FirebaseAuth.instance.currentUser;
     if (firebaseUser != null) {

@@ -6,6 +6,7 @@ class Event {
   DateTime dateLimit;
   String photoURL;
   int timestamp;
+  String creator;
   List<Position> listPositions;
 
 
@@ -15,6 +16,7 @@ class Event {
       required this.dateLimit ,
       this.photoURL = '',
       this.timestamp = 0,
+        this.creator = '',
       this.listPositions = const []});
 
 
@@ -23,6 +25,7 @@ class Event {
         name: parsedJson['email'] ?? '',
         description: parsedJson['firstName'] ?? '',
         dateLimit: parsedJson['lastName'] ?? '',
+        creator: parsedJson['creator'] ?? '',
         photoURL: parsedJson['id'] ?? parsedJson['userID'] ?? '',
         timestamp: parsedJson['timestamp'] ?? parsedJson['timestamp'] ?? '',
         listPositions: parsedJson['listPositions'] ?? '');
@@ -34,6 +37,7 @@ class Event {
       'description': description,
       'dateLimit': dateLimit,
       'photoURL': photoURL,
+      'creator': creator,
       'timestamp': timestamp,
       'listPositions': listPositions.map((i) => i.toJson()).toList(),
     };
