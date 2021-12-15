@@ -44,7 +44,7 @@ class _LoginScreen extends State<LoginScreen> {
                         context, HomeEvents(user: state.user!), false);
                   } else {
                     showSnackBar(context,
-                        state.message ?? 'Couldn\'t login, Please try again.');
+                        state.message ?? 'No se pudo loguear, Intente nuevamente.');
                   }
                 },
               ),

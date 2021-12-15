@@ -45,7 +45,7 @@ class AuthenticationBloc
         emit(AuthenticationState.unauthenticated(message: result));
       } else {
         emit(const AuthenticationState.unauthenticated(
-            message: 'Facebook login failed, Please try again.'));
+            message: 'Login incorrecto, Intente de nueva.'));
       }
     });
     on<LoginWithGoogleEvent>((event, emit) async {
@@ -57,7 +57,7 @@ class AuthenticationBloc
         emit(AuthenticationState.unauthenticated(message: result));
       } else {
         emit(const AuthenticationState.unauthenticated(
-            message: 'Facebook login failed, Please try again.'));
+            message: 'Login incorrecto, Intente de nueva.'));
       }
     });
 

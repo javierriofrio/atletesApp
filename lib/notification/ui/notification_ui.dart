@@ -16,7 +16,7 @@ class NotificationUI extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: Text('Crear Eventos'),
+          title: Text('Notificaciones'),
           centerTitle: true,
         ),
         body: StreamBuilder<QuerySnapshot>(

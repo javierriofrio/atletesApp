@@ -62,7 +62,7 @@ class UserFind extends StatelessWidget {
                             child:
                               ListTile(
                                 leading: Icon(Icons.star ),
-                                title: Text(snapshot.data!.docs[index]['lastName']),
+                                title: Text(snapshot.data!.docs[index]['firstName'] + " " + snapshot.data!.docs[index]['lastName']),
                           )
                             /*onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EventEdit(this.user, snapshot.data!.docs[index].id))),*/
                           );
