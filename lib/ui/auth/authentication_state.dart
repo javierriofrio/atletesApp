@@ -16,5 +16,4 @@ class AuthenticationState {
       : this._(AuthState.unauthenticated,
             message: message ?? 'Unauthenticated');
 
-  const AuthenticationState.onboarding() : this._(AuthState.firstRun);
 }

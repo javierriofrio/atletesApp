@@ -1,5 +1,7 @@
 import 'package:atletes_sport_app/services/authenticate.dart';
 import 'package:atletes_sport_app/user/model/user.dart';
+import 'package:atletes_sport_app/event/model/event.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 
@@ -7,12 +9,14 @@ import 'event_edit_form.dart';
 
 class EventEdit extends StatelessWidget {
 
-  late User user;
-  late String eventId;
-  EventEdit(this.user, String eventId);
+  final DocumentSnapshot event;
+
+  EventEdit(this.event);
 
   static getEvent(String eventId) async {
-    return await FireStoreUtils.getCurrentEvent(eventId);
+    print(eventId);
+    Event? event = await FireStoreUtils.getCurrentEvent(eventId);
+    return event;
   }
 
   @override
@@ -22,10 +26,10 @@ class EventEdit extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text('Crear Eventos'),
+        title: Text('Competir Eventos'),
         centerTitle: true,
       ),
-      body: EventEditForm(this.user, eventId),
+      body: EventEditForm(this.event),
     );
   }
 }

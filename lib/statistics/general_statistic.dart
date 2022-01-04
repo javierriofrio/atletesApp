@@ -20,7 +20,7 @@ class _StatistictState extends State<GeneralStatistic> {
   int indexTap = 0;
 
   List<Widget> _children() =>
-      [EventAdd(), NotificationUI(user), EventHome(widget.user), UserDetails()];
+      [EventAdd(user), NotificationUI(user), EventHome(widget.user)];
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 

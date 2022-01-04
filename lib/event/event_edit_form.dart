@@ -1,28 +1,26 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:atletes_sport_app/event/model/event.dart';
 import 'package:atletes_sport_app/services/authenticate.dart';
-import 'package:atletes_sport_app/user/model/user.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 
-const LatLng SOURCE_LOCATION = LatLng(42.7477863, -71.1699932);
-const LatLng DEST_LOCATION = LatLng(42.744421, -71.1698939);
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 80;
 const double CAMERA_BEARING = 30;
 const double PIN_VISIBLE_POSITION = 20;
 const double PIN_INVISIBLE_POSITION = -220;
+const LatLng SOURCE_LOCATION = LatLng(42.7477863, -71.1699932);
+const LatLng DEST_LOCATION = LatLng(42.744421, -71.1698939);
 
 class EventEditForm extends StatefulWidget {
-  late User user;
-  late String eventId;
-  EventEditForm(this.user, String eventId);
+  final DocumentSnapshot event;
+  EventEditForm(this.event);
 
   @override
   _EventEditForm createState() => _EventEditForm();
@@ -30,11 +28,9 @@ class EventEditForm extends StatefulWidget {
 
 class _EventEditForm extends State<EventEditForm> {
   File? image;
-
   late String imageUrl = 'https://i.imgur.com/sUFH1Aq.png';
   TextEditingController _controllerName = TextEditingController();
   TextEditingController _controllerDescription = TextEditingController();
-  TextEditingController _controllerDateLimit = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   Event event = new Event(dateLimit: DateTime.now());
@@ -55,22 +51,24 @@ class _EventEditForm extends State<EventEditForm> {
 
   Set<Polyline> _polylines = Set<Polyline>();
   List<LatLng> polylineCoordinates = [];
-  late PolylinePoints polylinePoints;
+
 
   @override
   void initState() {
     super.initState();
-    setInitialLocation();
-    polylinePoints = PolylinePoints();
+    //setInitialLocation();
+
+    _controllerDescription = TextEditingController(text: widget.event.get("description")) ;
+    _controllerName = TextEditingController(text: widget.event.get("name")) ;
+    _dateController = TextEditingController(text: widget.event.get("dateLimit").toDate().toString()) ;
+    print(widget.event.get("eventID"));
+    print(widget.event.get("listPositions"));
+    widget.event.get("listPositions").forEach((value){
+      polylineCoordinates.add(LatLng(value["latitude"],value["longitude"]));
+    });
+    print(widget.event.get("eventID"));
   }
 
-  void setInitialLocation() {
-    currentLocation =
-        LatLng(SOURCE_LOCATION.latitude, SOURCE_LOCATION.longitude);
-
-    destinationLocation =
-        LatLng(DEST_LOCATION.latitude, DEST_LOCATION.longitude);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,11 +93,8 @@ class _EventEditForm extends State<EventEditForm> {
                     icon: const Icon(Icons.event),
                     labelText: 'Nombre',
                   ),
-                  initialValue: event.name,
-
                 ),
                 TextFormField(
-                  initialValue: event.description,
                   controller: _controllerDescription,
                   decoration: const InputDecoration(
                     icon: const Icon(Icons.event_note),
@@ -107,7 +102,6 @@ class _EventEditForm extends State<EventEditForm> {
                   ),
                 ),
                 TextFormField(
-                  initialValue: event.dateLimit.toString(),
                   controller: _dateController,
                   keyboardType: TextInputType.datetime,
                   decoration: InputDecoration(
@@ -131,7 +125,7 @@ class _EventEditForm extends State<EventEditForm> {
                             .width,
                         height: 200.0,
                         child: Center(
-                          child: Image.network(event.photoURL),
+                          child: Image.network(widget.event.get("photoURL")),
                         ),
                       ),
                     ),
@@ -162,6 +156,18 @@ class _EventEditForm extends State<EventEditForm> {
                     ],
                   ),
                 ),
+                Container(
+                  height: 400,
+                  child: GoogleMap(
+                      myLocationEnabled: true,
+                      compassEnabled: true,
+                      tiltGesturesEnabled: false,
+                      markers: _markers,
+                      polylines: _polylines,
+                      mapType: MapType.normal,
+                      initialCameraPosition: initialCameraPosition,
+                      onMapCreated: onMapCreated),
+                ),
                 ElevatedButton(
                   onPressed: _submit,
                   child: Text("Guardar"),
@@ -172,17 +178,12 @@ class _EventEditForm extends State<EventEditForm> {
     );
   }
 
-  void setPolylines() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        "<AIzaSyBxmNiWAYSxSnOV9LXSVZIpDM-E1mYa5pU>",
-        PointLatLng(currentLocation.latitude, currentLocation.longitude),
-        PointLatLng(
-            destinationLocation.latitude, destinationLocation.longitude));
-    if (result.status == 'OK') {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
+  void onMapCreated(GoogleMapController controller) {
+    _controller.complete(controller);
+    setPolylines();
+  }
 
+  void setPolylines() async {
       setState(() {
         _polylines.add(Polyline(
             width: 10,
@@ -190,31 +191,14 @@ class _EventEditForm extends State<EventEditForm> {
             color: Color(0xFF08A5CB),
             points: polylineCoordinates));
       });
-    }
+
   }
 
+  ///Botón encargado para guardar los cambios para eventos editados
   void _submit() {
     event.listPositions = locationList;
     event.timestamp = watch.elapsedMilliseconds;
-    FirebaseStorage.instance.ref('images/' + event.name)
-        .putFile(_image!)
-        .whenComplete(() async {
-      try {
-        imageUrl = await FirebaseStorage.instance.ref('images/' + event.name).getDownloadURL();
-        event.photoURL = imageUrl;
-      } catch (onError) {
-        print("Error");
-      }
-      FireStoreUtils.createNewEvent(event);
-
-    });
-  }
-
-  Future pickImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (image == null) return;
-    final imageTemporary = File(image.path);
-    setState(() => this._image = imageTemporary);
+    FireStoreUtils.createNewEventUser(event);
   }
 
   updateTime(Timer timer) {

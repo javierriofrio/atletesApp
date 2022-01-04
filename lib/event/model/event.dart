@@ -1,6 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 
 class Event {
+  String eventID;
   String name;
   String description;
   DateTime dateLimit;
@@ -11,17 +12,20 @@ class Event {
 
 
   Event(
-      {this.name = '',
+      {
+      this.eventID = '',
+      this.name = '',
       this.description = '',
       required this.dateLimit ,
       this.photoURL = '',
       this.timestamp = 0,
-        this.creator = '',
+      this.creator = '',
       this.listPositions = const []});
 
 
   factory Event.fromJson(Map<String, dynamic> parsedJson) {
     return Event(
+      eventID: parsedJson['eventID'] ?? '',
         name: parsedJson['email'] ?? '',
         description: parsedJson['firstName'] ?? '',
         dateLimit: parsedJson['lastName'] ?? '',
@@ -33,6 +37,7 @@ class Event {
 
   Map<String, dynamic> toJson() {
     return {
+      'eventID': eventID,
       'name': name,
       'description': description,
       'dateLimit': dateLimit,

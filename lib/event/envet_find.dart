@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:atletes_sport_app/event/model/event.dart';
 import 'package:atletes_sport_app/services/authenticate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

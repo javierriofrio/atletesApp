@@ -31,53 +31,10 @@ class EventList extends StatelessWidget {
               return GestureDetector(
                 child: DescriptionEvent(snapshot.data!.docs[index]['name'], snapshot.data!.docs[index]['description'],
                     snapshot.data!.docs[index]['photoURL'].toString()),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EventEdit(this.user, snapshot.data!.docs[index].id))),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EventEdit(snapshot.data!.docs[index]))),
               );
             },
           );
-      });/*,
-          return ListView(
-            children: snapshot.data!.docs.map((doc) {
-              return Card(
-                child: DescriptionEvent(snapshot.data.name, snapshot[index].description,
-                    snapshot[index].photoURL.toString());
-              );
-            }).toList(),
-          );
-      },
-    );*/
+      });
   }
-
-    /*StreamBuilder(
-      stream: FireStoreUtils.firestore.collection('EVENTS').snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if(snapshot.hasData){
-          child: DescriptionEvent(snapshot.data.name, snapshot.data.description,
-              snapshot.data.photoURL.toString());
-        };
-      }
-    ),*/
-    /*ListView(
-
-      children: FireStoreUtils.firestore.collection('EVENTS').snapshots().map((event) => {
-          return DescriptionEvent(snapshot.data.name, snapshot.data.description,
-          snapshot.data.photoURL.toString());
-      }),
-    )*/
-
-    /*);*//*ListView.builder(
-      itemCount: snapshot.data.documents.length,
-      itemBuilder: (context, index) {
-        DocumentSnapshot user = snapshot.data.documents[index];
-
-        return DescriptionEvent(snapshot[index].name, snapshot[index].description,
-            snapshot[index].photoURL.toString());
-      },
-    );*/
-  /*}*/
-
-/*  Widget _itemBuilder (BuildContext context, int index){
-    return DescriptionEvent(listEvents[index].name, listEvents[index].description,
-        listEvents[index].photoURL.toString());
-  }*/
 }

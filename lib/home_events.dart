@@ -2,8 +2,6 @@ import 'package:atletes_sport_app/notification/ui/notification_ui.dart';
 import 'package:atletes_sport_app/statistics/general_statistic.dart';
 import 'package:atletes_sport_app/user/user_details.dart';
 import 'package:atletes_sport_app/user/user_find.dart';
-import 'package:atletes_sport_app/user/user_list.dart';
-import 'package:atletes_sport_app/user/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:atletes_sport_app/event/event_add.dart';
 import 'package:atletes_sport_app/event/event_list_home.dart';
@@ -14,7 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:atletes_sport_app/services/helper.dart';
 import 'package:atletes_sport_app/ui/auth/authentication_bloc.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 import 'event/envet_find.dart';
 
@@ -32,7 +29,7 @@ class _EventState extends State<HomeEvents> {
   int indexTap = 0;
 
   List<Widget> _children() =>
-      [EventAdd(), NotificationUI(user), EventHome(widget.user), UserDetails()];
+      [EventAdd(user), NotificationUI(user), EventHome(widget.user), UserDetails(user)];
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
@@ -71,7 +68,7 @@ class _EventState extends State<HomeEvents> {
                 title: Text('Mi Perfil'),
                 onTap: (){
                   push(
-                      context, UserDetails());
+                      context, UserDetails(user));
                 },
               ),
               ListTile(
@@ -79,7 +76,7 @@ class _EventState extends State<HomeEvents> {
                 title: Text('Crear Evento'),
                 onTap: (){
                   push(
-                      context, EventAdd());
+                      context, EventAdd(user));
                 },
               ),
               ListTile(

@@ -1,10 +1,7 @@
 import 'package:atletes_sport_app/services/authenticate.dart';
-import 'package:atletes_sport_app/user/user_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:atletes_sport_app/header_appbar.dart';
 import 'package:atletes_sport_app/user/model/user.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserFind extends StatelessWidget {
   late User user;

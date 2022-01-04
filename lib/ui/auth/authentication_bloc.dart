@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:atletes_sport_app/constants.dart';
 import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:atletes_sport_app/services/authenticate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,24 +15,6 @@ class AuthenticationBloc
 
   AuthenticationBloc({this.user})
       : super(const AuthenticationState.unauthenticated()) {
-    on<CheckFirstRunEvent>((event, emit) async {
-      prefs = await SharedPreferences.getInstance();
-      finishedOnBoarding = prefs.getBool(FINISHED_ON_BOARDING) ?? false;
-      if (!finishedOnBoarding) {
-        emit(const AuthenticationState.onboarding());
-      } else {
-        user = await FireStoreUtils.getAuthUser();
-        if (user == null) {
-          emit(const AuthenticationState.unauthenticated());
-        } else {
-          emit(AuthenticationState.authenticated(user!));
-        }
-      }
-    });
-    on<FinishedOnBoardingEvent>((event, emit) async {
-      await prefs.setBool(FINISHED_ON_BOARDING, true);
-      emit(const AuthenticationState.unauthenticated());
-    });
 
     on<LoginWithFacebookEvent>((event, emit) async {
       dynamic result = await FireStoreUtils.loginWithFacebook();

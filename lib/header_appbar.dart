@@ -64,7 +64,7 @@ class HeaderAppBar extends StatelessWidget {
                                 Text('Creados',
                                     style: TextStyle(
                                         fontSize: 15, color: Colors.white)),
-                                Text('0',
+                                Text(user.created.toString(),
                                     style: TextStyle(
                                         fontSize: 12, color: Colors.white))
                               ],
@@ -74,7 +74,7 @@ class HeaderAppBar extends StatelessWidget {
                                 Text('Completados',
                                     style: TextStyle(
                                         fontSize: 15, color: Colors.white)),
-                                Text('10',
+                                Text(user.completed.toString(),
                                     style: TextStyle(
                                         fontSize: 12, color: Colors.white))
                               ],
@@ -88,7 +88,7 @@ class HeaderAppBar extends StatelessWidget {
                 margin: const EdgeInsets.all(20.20),
                 child: Column(
                   children: [
-                    Text('1000 pts',
+                    Text(user.points + ' pts',
                         style: TextStyle(fontSize: 10, color: Colors.white))
                   ],
                 ),

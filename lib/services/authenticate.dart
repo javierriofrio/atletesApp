@@ -11,6 +11,7 @@ class FireStoreUtils {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
   static FirebaseStorage storage = FirebaseStorage.instance;
 
+  ///Método para obtener el usuario actual
   static Future<User?> getCurrentUser(String uid) async {
     DocumentSnapshot<Map<String, dynamic>> userDocument =
         await firestore.collection(USERS).doc(uid).get();
@@ -21,6 +22,7 @@ class FireStoreUtils {
     }
   }
 
+  ///Método para obtener el evento actual
   static Future<Event?> getCurrentEvent(String uid) async {
     DocumentSnapshot<Map<String, dynamic>> userDocument =
     await firestore.collection(EVENTS).doc(uid).get();
@@ -31,6 +33,7 @@ class FireStoreUtils {
     }
   }
 
+  ///Método para actualizar el usuario que esta iniciado sesión
   static Future<User> updateCurrentUser(User user) async {
     return await firestore
         .collection(USERS)
@@ -41,6 +44,7 @@ class FireStoreUtils {
     });
   }
 
+  ///Método para poder iniciar sesión a través de facebook
   static loginWithFacebook() async {
     FacebookAuth facebookAuth = FacebookAuth.instance;
     bool isLogged = await facebookAuth.accessToken != null;
@@ -60,6 +64,7 @@ class FireStoreUtils {
     }
   }
 
+  ///Manejo de logeo con facebook
   static handleFacebookLogin(
       Map<String, dynamic> userData, AccessToken token) async {
     auth.UserCredential authResult = await auth.FirebaseAuth.instance
@@ -77,6 +82,7 @@ class FireStoreUtils {
     return await createUserFacebook(user, userData, firstName, lastName, authResult);
   }
 
+  ///Método para poder iniciar sesión a través de google
   static loginWithGoogle() async {
 
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -100,11 +106,15 @@ class FireStoreUtils {
     return await createUserGoogle(user, firstName, lastName, authResult);
   }
 
+  ///Método para crear los usuario que logearon los usuarios de google
   static Future<dynamic> createUserGoogle (User? user, String firstName, String lastName, auth.UserCredential authResult) async {
     user = User(
         email: authResult.user!.emailVerified.toString(),
         firstName: firstName,
         lastName: lastName,
+        completed: '0',
+        created: '0',
+        points: '0',
         profilePictureURL: authResult.user!.photoURL.toString(),
         userID: authResult.user!.uid
     );
@@ -116,6 +126,7 @@ class FireStoreUtils {
     }
   }
 
+  ///Método para crear los usuario que logearon los usuarios de facebook
   static Future<dynamic> createUserFacebook(User? user, Map<String, dynamic> userData, String firstName, String lastName, auth.UserCredential authResult) async {
     if (user != null) {
       user.profilePictureURL = userData['picture']['data']['url'];
@@ -129,6 +140,8 @@ class FireStoreUtils {
           email: userData['email'] ?? '',
           firstName: firstName,
           lastName: lastName,
+          completed: '0',
+          created: '0',
           profilePictureURL: userData['picture']['data']['url'] ?? '',
           userID: authResult.user?.uid ?? '');
       String? errorMessage = await createNewUser(user);
@@ -140,27 +153,29 @@ class FireStoreUtils {
     }
   }
 
-  /// save a new user document in the USERS table in firebase firestore
-  /// returns an error message on failure or null on success
+  /// Método para crear un nuevo usuario
   static Future<String?> createNewUser(User user) async => await firestore
       .collection(USERS)
       .doc(user.userID)
       .set(user.toJson())
       .then((value) => null, onError: (e) => e);
 
+  ///Mètodo para crear un nuevo evento
   static Future<String?> createNewEvent(Event event) async => await firestore
       .collection(EVENTS)
-      .doc()
+      .doc(event.eventID)
       .set(event.toJson())
       .then((value) => null, onError: (e) => e);
 
+  ///Mètodo para salir de sesión
   static logout() async {
     await auth.FirebaseAuth.instance.signOut();
   }
 
-  static Future<String?> createNewEventUser(Event event, String userId) async => await firestore
-      .collection(USERS).doc().collection(EVENTS)
-      .doc()
+  ///Método para crear eventos en la colección del usuario que inició sesión
+  static Future<String?> createNewEventUser(Event event) async => await firestore
+      .collection(USERS).doc(event.creator).collection(EVENTS)
+      .doc(event.eventID)
       .set(event.toJson())
       .then((value) => null, onError: (e) => e);
 

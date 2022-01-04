@@ -1,4 +1,3 @@
-import 'dart:io';
 
 class User {
   String email;
@@ -6,10 +5,12 @@ class User {
   String lastName;
   String userID;
   String profilePictureURL;
-  String appIdentifier;
   String country;
   String city;
-  List<String> sports;
+  String completed;
+  String created;
+  String points;
+  Map<String,bool> sports;
   String description;
 
   User(
@@ -17,12 +18,14 @@ class User {
       this.firstName = '',
       this.lastName = '',
       this.userID = '',
-        this.description = '',
-        this.country = '',
-        this.city = '',
-        this.sports  = const [],
-      this.profilePictureURL = ''})
-      : appIdentifier = 'Flutter Login Screen ${Platform.operatingSystem}';
+      this.description = '',
+      this.completed = '',
+      this.created = '',
+      this.country = '',
+      this.city = '',
+        this.points = '',
+      this.sports  = const  {},
+      this.profilePictureURL = ''});
 
   String fullName() => '$firstName $lastName';
 
@@ -32,6 +35,11 @@ class User {
         firstName: parsedJson['firstName'] ?? '',
         lastName: parsedJson['lastName'] ?? '',
         userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
+        country: parsedJson['country'] ?? parsedJson['country'] ?? '',
+        city: parsedJson['city'] ?? parsedJson['city'] ?? '',
+        completed: parsedJson['completed'] ?? parsedJson['completed'] ?? '0',
+        created: parsedJson['created'] ?? parsedJson['created'] ?? '0',
+        points: parsedJson['points'] ?? parsedJson['points'] ?? '0',
         profilePictureURL: parsedJson['profilePictureURL'] ?? '');
   }
 
@@ -42,7 +50,12 @@ class User {
       'lastName': lastName,
       'id': userID,
       'profilePictureURL': profilePictureURL,
-      'appIdentifier': appIdentifier
+      'city': city,
+      'country': country,
+      'sports': sports,
+      'completed': completed,
+      'created': created,
+      'points': points
     };
   }
 }

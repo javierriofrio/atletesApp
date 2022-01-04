@@ -3,12 +3,14 @@ import 'dart:io';
 
 import 'package:atletes_sport_app/event/model/event.dart';
 import 'package:atletes_sport_app/services/authenticate.dart';
+import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 const LatLng SOURCE_LOCATION = LatLng(42.7477863, -71.1699932);
 const LatLng DEST_LOCATION = LatLng(42.744421, -71.1698939);
@@ -19,6 +21,10 @@ const double PIN_VISIBLE_POSITION = 20;
 const double PIN_INVISIBLE_POSITION = -220;
 
 class EventForm extends StatefulWidget {
+
+  late User user;
+  EventForm(this.user);
+
   @override
   _EventForm createState() => _EventForm();
 }
@@ -29,7 +35,6 @@ class _EventForm extends State<EventForm> {
   late String imageUrl = 'https://i.imgur.com/sUFH1Aq.png';
   TextEditingController _controllerName = TextEditingController();
   TextEditingController _controllerDescription = TextEditingController();
-  TextEditingController _controllerDateLimit = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   Event event = new Event(dateLimit: DateTime.now());
@@ -182,23 +187,6 @@ class _EventForm extends State<EventForm> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 400, // or use fixed size like 200
-                  height: 400,
-                  child: GoogleMap(
-                    myLocationEnabled: true,
-                    compassEnabled: false,
-                    tiltGesturesEnabled: false,
-                    polylines: _polylines,
-                    markers: _markers,
-                    mapType: MapType.normal,
-                    initialCameraPosition: initialCameraPosition,
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                      setPolylines();
-                    },
-                  ),
-                ),
                 ElevatedButton(
                   onPressed: _submit,
                   child: Text("Guardar"),
@@ -242,7 +230,10 @@ class _EventForm extends State<EventForm> {
       } catch (onError) {
         print("Error");
       }
+      event.eventID = Uuid().v1();
+      event.creator = widget.user.userID;
       FireStoreUtils.createNewEvent(event);
+      FireStoreUtils.createNewEventUser(event);
 
     });
   }
