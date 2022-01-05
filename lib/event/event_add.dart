@@ -7,6 +7,7 @@ class EventAdd extends StatelessWidget {
   late User user;
   EventAdd(this.user);
 
+  ///Metodo build que crea la pantalla para agregar eventos
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

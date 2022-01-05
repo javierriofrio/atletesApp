@@ -112,9 +112,9 @@ class FireStoreUtils {
         email: authResult.user!.emailVerified.toString(),
         firstName: firstName,
         lastName: lastName,
-        completed: '0',
-        created: '0',
-        points: '0',
+        completed: 0,
+        created: 0,
+        points: 0,
         profilePictureURL: authResult.user!.photoURL.toString(),
         userID: authResult.user!.uid
     );
@@ -140,8 +140,8 @@ class FireStoreUtils {
           email: userData['email'] ?? '',
           firstName: firstName,
           lastName: lastName,
-          completed: '0',
-          created: '0',
+          completed: 0,
+          created: 0,
           profilePictureURL: userData['picture']['data']['url'] ?? '',
           userID: authResult.user?.uid ?? '');
       String? errorMessage = await createNewUser(user);

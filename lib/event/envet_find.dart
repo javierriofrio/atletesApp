@@ -21,12 +21,14 @@ class _EventFind extends State<EventFind> {
     });
   }
 
+  ///Metodo para inicializar los estados
   @override
   void initState() {
     super.initState();
     getEventDetails();
   }
 
+  ///Metodo build que crea la pantalla para buscar los eventos
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -90,6 +92,7 @@ class _EventFind extends State<EventFind> {
     );
   }
 
+  ///Metodo que se ejecuta la momento de escribir en la caja de b'usqueda y actualiza la lista mostrada
   onSearchTextChanged(String text) async {
     _searchResult.clear();
     if (text.isEmpty) {

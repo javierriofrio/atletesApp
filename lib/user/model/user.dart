@@ -7,9 +7,9 @@ class User {
   String profilePictureURL;
   String country;
   String city;
-  String completed;
-  String created;
-  String points;
+  int completed;
+  int created;
+  int points;
   Map<String,bool> sports;
   String description;
 
@@ -19,11 +19,11 @@ class User {
       this.lastName = '',
       this.userID = '',
       this.description = '',
-      this.completed = '',
-      this.created = '',
+      this.completed = 0,
+      this.created = 0,
       this.country = '',
       this.city = '',
-        this.points = '',
+        this.points = 0,
       this.sports  = const  {},
       this.profilePictureURL = ''});
 
@@ -37,9 +37,9 @@ class User {
         userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
         country: parsedJson['country'] ?? parsedJson['country'] ?? '',
         city: parsedJson['city'] ?? parsedJson['city'] ?? '',
-        completed: parsedJson['completed'] ?? parsedJson['completed'] ?? '0',
-        created: parsedJson['created'] ?? parsedJson['created'] ?? '0',
-        points: parsedJson['points'] ?? parsedJson['points'] ?? '0',
+        completed: parsedJson['completed'] ?? parsedJson['completed'] ?? 0,
+        created: parsedJson['created'] ?? parsedJson['created'] ?? 0,
+        points: parsedJson['points'] ?? parsedJson['points'] ?? 0,
         profilePictureURL: parsedJson['profilePictureURL'] ?? '');
   }
 

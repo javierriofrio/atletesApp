@@ -88,7 +88,7 @@ class HeaderAppBar extends StatelessWidget {
                 margin: const EdgeInsets.all(20.20),
                 child: Column(
                   children: [
-                    Text(user.points + ' pts',
+                    Text(user.points.toString() + ' pts',
                         style: TextStyle(fontSize: 10, color: Colors.white))
                   ],
                 ),
