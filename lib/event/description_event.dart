@@ -7,9 +7,9 @@ class DescriptionEvent extends StatelessWidget {
 
   DescriptionEvent(this.nameEvent, this.descriptionEvent, this.imagenURL);
 
+  ///Método build para construir el widget para descripcion de eventos
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
 
     final event = Card(
         clipBehavior: Clip.antiAlias,

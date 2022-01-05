@@ -1,5 +1,3 @@
-import 'package:atletes_sport_app/event/event_add.dart';
-import 'package:atletes_sport_app/event/event_edit.dart';
 import 'package:atletes_sport_app/services/authenticate.dart';
 import 'package:atletes_sport_app/user/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

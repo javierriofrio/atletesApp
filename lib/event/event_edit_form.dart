@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:atletes_sport_app/event/model/event.dart';
 import 'package:atletes_sport_app/services/authenticate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -15,8 +13,7 @@ const double CAMERA_TILT = 80;
 const double CAMERA_BEARING = 30;
 const double PIN_VISIBLE_POSITION = 20;
 const double PIN_INVISIBLE_POSITION = -220;
-const LatLng SOURCE_LOCATION = LatLng(42.7477863, -71.1699932);
-const LatLng DEST_LOCATION = LatLng(42.744421, -71.1698939);
+
 
 class EventEditForm extends StatefulWidget {
   final DocumentSnapshot event;
@@ -32,7 +29,6 @@ class _EventEditForm extends State<EventEditForm> {
   TextEditingController _controllerName = TextEditingController();
   TextEditingController _controllerDescription = TextEditingController();
   TextEditingController _dateController = TextEditingController();
-  DateTime selectedDate = DateTime.now();
   Event event = new Event(dateLimit: DateTime.now());
   Completer<GoogleMapController> _controller = Completer();
   late BitmapDescriptor sourceIcon;
@@ -53,6 +49,7 @@ class _EventEditForm extends State<EventEditForm> {
   List<LatLng> polylineCoordinates = [];
 
 
+  ///Inicializar valores para del evento seleccionado en la lista de eventos
   @override
   void initState() {
     super.initState();
@@ -70,15 +67,16 @@ class _EventEditForm extends State<EventEditForm> {
   }
 
 
+  ///Método build que construye la pantalla para editar eventos
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-
+    ///Posisionamiento de la camara en la primera posision
     CameraPosition initialCameraPosition = CameraPosition(
         zoom: CAMERA_ZOOM,
         tilt: CAMERA_TILT,
         bearing: CAMERA_BEARING,
-        target: SOURCE_LOCATION);
+        target: polylineCoordinates[0]);
 
     return Form(
       child: new SingleChildScrollView(
@@ -178,11 +176,13 @@ class _EventEditForm extends State<EventEditForm> {
     );
   }
 
+  ///Método llamado para dibujar elementos necesarios dentro del mapa de googleMaps
   void onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
     setPolylines();
   }
 
+  ///Método para dibujar la lineas de la ruta del eventos
   void setPolylines() async {
       setState(() {
         _polylines.add(Polyline(
@@ -215,6 +215,7 @@ class _EventEditForm extends State<EventEditForm> {
     print(locationList);
   }
 
+  ///Metodo para el timer vaya guardando las ubicaciones en el objeto evento
   startOrStop() {
     if (startStop) {
       startWatch();
@@ -223,6 +224,7 @@ class _EventEditForm extends State<EventEditForm> {
     }
   }
 
+  ///Metodo para correr el timer
   startWatch() {
     setState(() {
       startStop = false;
@@ -231,6 +233,7 @@ class _EventEditForm extends State<EventEditForm> {
     });
   }
 
+  ///Metodo para parar el timer
   stopWatch() {
     setState(() {
       startStop = true;
@@ -239,6 +242,7 @@ class _EventEditForm extends State<EventEditForm> {
     });
   }
 
+  ///Metodo para setear el tiempo transcurrido en el timer
   setTime() {
     var timeSoFar = watch.elapsedMilliseconds;
     setState(() {
@@ -246,6 +250,7 @@ class _EventEditForm extends State<EventEditForm> {
     });
   }
 
+  ///Metodo para transformar el tiempo en milisegundos a horas:minutos:segundos
   transformMilliSeconds(int milliseconds) {
     int hundreds = (milliseconds / 10).truncate();
     int seconds = (hundreds / 100).truncate();

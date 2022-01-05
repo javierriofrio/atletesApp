@@ -7,6 +7,7 @@ class EventHome extends StatelessWidget {
   late User user;
   EventHome(this.user);
 
+  ///Metodo build para construir la pantalla de home de eventos
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

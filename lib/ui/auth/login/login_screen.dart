@@ -57,6 +57,8 @@ class _LoginScreen extends State<LoginScreen> {
                   _validate = AutovalidateMode.onUserInteraction;
                 }
                 return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       child: Image.asset(
@@ -86,25 +88,6 @@ class _LoginScreen extends State<LoginScreen> {
                           color: Colors.redAccent,
                           textColor: Colors.white,
                         ),
-                        MaterialButton(
-                          onPressed: () {
-                            context.read<LoadingCubit>().showLoading(
-                                context, 'Logging in, Please wait...', false);
-                            context.read<AuthenticationBloc>().add(
-                                  LoginWithFacebookEvent(),
-                                );
-                          },
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
-                          ),
-                          minWidth: double.infinity,
-                          height: 40,
-                          child: Text(
-                            'Login Facebook'.toUpperCase(),
-                          ),
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                        )
                       ],
                     )),
                   ],

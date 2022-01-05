@@ -12,10 +12,10 @@ class EventList extends StatelessWidget {
   late User user;
   EventList(this.user);
 
+  ///Metodo buil para construir la pantalla de lista de eventos
   @override
   Widget build(BuildContext context) {
 
-    // TODO: implement build
     return StreamBuilder<QuerySnapshot>(
       stream: FireStoreUtils.firestore.collection('events').snapshots(),
       builder: (context, snapshot) {

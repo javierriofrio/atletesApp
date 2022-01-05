@@ -32,6 +32,7 @@ class EventForm extends StatefulWidget {
 class _EventForm extends State<EventForm> {
   File? image;
 
+  ///Imagen por defecto para mostrar en pantalla
   late String imageUrl = 'https://i.imgur.com/sUFH1Aq.png';
   TextEditingController _controllerName = TextEditingController();
   TextEditingController _controllerDescription = TextEditingController();
@@ -39,13 +40,6 @@ class _EventForm extends State<EventForm> {
   DateTime selectedDate = DateTime.now();
   Event event = new Event(dateLimit: DateTime.now());
 
-  Completer<GoogleMapController> _controller = Completer();
-  late BitmapDescriptor sourceIcon;
-  late BitmapDescriptor destinationIcon;
-  Set<Marker> _markers = Set<Marker>();
-  double pinPillPosition = PIN_VISIBLE_POSITION;
-  late LatLng currentLocation;
-  late LatLng destinationLocation;
   bool userBadgeSelected = false;
   File? _image;
   Stopwatch watch = Stopwatch();
@@ -54,34 +48,16 @@ class _EventForm extends State<EventForm> {
   bool startStop = true;
   String elapsedTime = '';
 
-  Set<Polyline> _polylines = Set<Polyline>();
-  List<LatLng> polylineCoordinates = [];
-  late PolylinePoints polylinePoints;
-
+  ///Método inicializar el estado
   @override
   void initState() {
     super.initState();
-    setInitialLocation();
-    polylinePoints = PolylinePoints();
   }
 
-  void setInitialLocation() {
-    currentLocation =
-        LatLng(SOURCE_LOCATION.latitude, SOURCE_LOCATION.longitude);
 
-    destinationLocation =
-        LatLng(DEST_LOCATION.latitude, DEST_LOCATION.longitude);
-  }
-
+  ///Método build para construir la pantalla para añadir eventos
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
-    CameraPosition initialCameraPosition = CameraPosition(
-        zoom: CAMERA_ZOOM,
-        tilt: CAMERA_TILT,
-        bearing: CAMERA_BEARING,
-        target: SOURCE_LOCATION);
 
     return Form(
       child: new SingleChildScrollView(
@@ -195,27 +171,6 @@ class _EventForm extends State<EventForm> {
             ),
           )),
     );
-  }
-
-  void setPolylines() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        "<AIzaSyBxmNiWAYSxSnOV9LXSVZIpDM-E1mYa5pU>",
-        PointLatLng(currentLocation.latitude, currentLocation.longitude),
-        PointLatLng(
-            destinationLocation.latitude, destinationLocation.longitude));
-    if (result.status == 'OK') {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-
-      setState(() {
-        _polylines.add(Polyline(
-            width: 10,
-            polylineId: PolylineId('polyLine'),
-            color: Color(0xFF08A5CB),
-            points: polylineCoordinates));
-      });
-    }
   }
 
   void _submit() {

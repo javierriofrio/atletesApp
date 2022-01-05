@@ -23,13 +23,11 @@ class _UserDetails extends State<UserDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text('Usuario'),
-        centerTitle: true,
-      ),
+    return Scaffold(
+      appBar: new AppBar(
+        title: new Text('Perfil usuario'),
+      elevation: 0.0,
+    ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -135,7 +133,7 @@ class _UserDetails extends State<UserDetails> {
           ],
         ),
       ),
-    ));
+    );
   }
 
   @override

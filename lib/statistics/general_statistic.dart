@@ -1,7 +1,9 @@
+import 'package:atletes_sport_app/event/description_event.dart';
 import 'package:atletes_sport_app/event/event_add.dart';
 import 'package:atletes_sport_app/event/event_find.dart';
 import 'package:atletes_sport_app/notification/ui/notification_ui.dart';
-import 'package:atletes_sport_app/user/user_details.dart';
+import 'package:atletes_sport_app/services/authenticate.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:atletes_sport_app/user/model/user.dart';
@@ -40,54 +42,48 @@ class _StatistictState extends State<GeneralStatistic> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
 
     List<PieChartSectionData> pieChartSectionData = [
-      PieChartSectionData(
-        value: 20,
-        title: '20%',
-        color: Color(0xffed733f),
-      ),
-      PieChartSectionData(
-        value: 35,
-        title: '35%',
-        color: Color(0xff584f84),
-      ),
-      PieChartSectionData(
-        value: 15,
-        title: '15%',
-        color: Color(0xffd86f9b),
-      ),
-      PieChartSectionData(
-        value: 30,
-        title: '30%',
-        color: Color(0xffa2663e),
-      ),
     ];
-
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.blue,
-        title: Text('Estadisticas'),
-        centerTitle: true,
-      ),
+      appBar: new AppBar(
+    title: new Text('Estadisticas Generales'),
+    elevation: 0.0,
+    ),
       body: Column(
-        children: [
+        children: [StreamBuilder<QuerySnapshot>(
+            stream: FireStoreUtils.firestore.collection('users').snapshots(),
+            builder: (context, snapshot) {
+
+              List<QueryDocumentSnapshot> documentSnapshot = snapshot.data!.docs;
+              for(QueryDocumentSnapshot doc in documentSnapshot) {
+
+                final pieChart = PieChartSectionData(
+                    value: 30,
+                    title: "sss",
+                    color: Color(0xffa2663e));
+
+                pieChartSectionData.add(pieChart);
+              }
+              if (!snapshot.hasData) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount:snapshot.data!.docs.length,
+                  itemBuilder: (context,index){
+                    return GestureDetector(
+                      child: DescriptionEvent(snapshot.data!.docs[index]['firstName'], snapshot.data!.docs[index]['lastName'],
+                          snapshot.data!.docs[index]['profilePictureURL']),
+                    );
+                  },
+                );
+            }),
           Expanded(
-            flex: 3,
-      child:Container(
-            child: ListView(
-              children: [
-              ],
-            ),
-          )
-          ),
-          Expanded(
-            flex: 5,
+              flex: 5,
               child: PieChart(PieChartData(
-                  centerSpaceRadius: 100,
-                  sectionsSpace: 0,
                   sections: pieChartSectionData
               ))
           )
@@ -95,5 +91,6 @@ class _StatistictState extends State<GeneralStatistic> {
       ),
     );
   }
+
 }
 
