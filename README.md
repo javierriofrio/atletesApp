@@ -1,6 +1,6 @@
 # atletes_sport_app
 
-A new Flutter project.
+A flutter project to make soports routes
 
 ## Getting Started
 
